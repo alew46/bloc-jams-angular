@@ -55,4 +55,4 @@
         .factory('Fixtures', Fixtures);
     
 }
-)();
+)(); 
