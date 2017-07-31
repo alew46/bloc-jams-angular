@@ -48,11 +48,16 @@
         
         /**
         * @function getSong
-        * @desc Returns index of song passed in (need to pass in currentSong later)
+        * @desc Returns index of song passed in (need to pass in currentSong later, wherever this is getting called in service)
         * @param {Object} song
         */
         var getSong = function(song) {
             return currentAlbum.songs.indexOf(song);
+        }
+        
+        var stopSong = function() {
+            currentBuzzObject.stop();
+            SongPlayer.currentSong.playing = null;
         }
 
         
@@ -92,7 +97,7 @@
         
         /**
          * @function SongPlayer.previous
-         * @desc Gets index of currentSong and iterates it down 1
+         * @desc Gets index of currentSong and iterates it down 1, then plays song at that new index
          * @param none
          */
         SongPlayer.previous = function() {
@@ -100,8 +105,25 @@
             currentSongIndex--;
             
             if (currentSongIndex < 0) {
-                currentBuzzObject.stop();
-                SongPlayer.currentSong.playing = null;
+                stopSong();
+            } else {
+                var song = currentAlbum.songs[currentSongIndex];
+                setSong(song);
+                playSong(song);
+            }
+        }
+        
+        /**
+         * @function SongPlayer.next
+         * @desc Gets index of currentSong and iterates it up 1, then plays song at that new index
+         * @param none
+         */
+        SongPlayer.next = function() {
+            var currentSongIndex = getSong(SongPlayer.currentSong);
+            currentSongIndex ++;
+            
+            if (currentSongIndex > currentAlbum.songs.length-1) {
+                stopSong();
             } else {
                 var song = currentAlbum.songs[currentSongIndex];
                 setSong(song);
