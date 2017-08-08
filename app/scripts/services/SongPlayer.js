@@ -67,6 +67,18 @@
         }
 
         
+        /*
+        */
+        SongPlayer.volume = 20;
+        
+        /*
+        */
+        SongPlayer.setVolume = function(vol) {
+            if (currentBuzzObject) {
+                currentBuzzObject.setVolume(vol);
+            }
+        };
+        
         /**
         * @desc Boolean to determine if song playing & if its same as one being hovered or clicked
         * @type {Boolean}
